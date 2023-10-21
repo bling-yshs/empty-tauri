@@ -1,8 +1,6 @@
 name: Release
 on:
   push:
-    tags:
-      - "v*"
   workflow_dispatch:
 
 jobs:
@@ -34,15 +32,20 @@ jobs:
         with:
           workspaces: "./src-tauri -> target"
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
       - name: Sync node version and setup cache
         uses: actions/setup-node@v3
         with:
           node-version: "lts/*"
-          cache: "yarn" # Set this to npm, yarn or pnpm.
+          cache: "pnpm" # Set this to npm, pnpm or pnpm.
 
       - name: Install frontend dependencies
         # If you don't have `beforeBuildCommand` configured you may want to build your frontend here too.
-        run: yarn install # Change this to npm, yarn or pnpm.
+        run: pnpm install # Change this to npm, pnpm or pnpm.
 
       - name: Build the app
         uses: tauri-apps/tauri-action@v0
