@@ -37,14 +37,14 @@ jobs:
         with:
           path: |
             ./node_modules
-          key: ${{ runner.os }}-tauri-${{ hashFiles('./package-lock.json') }}
+          key: ${{ runner.os }}-tauri-${{ hashFiles('**/package-lock.json') }}
 
       - name: Cache cargo
         uses: actions/cache@v3
         with:
           path: |
             ./src-tauri/target
-          key: ${{ runner.os }}-tauri-${{ hashFiles('./src-tauri/Cargo.lock') }}
+          key: ${{ runner.os }}-tauri-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Install frontend dependencies
         run: pnpm install
