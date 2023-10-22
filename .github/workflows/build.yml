@@ -32,6 +32,20 @@ jobs:
         with:
           node-version: "18.18.2"
 
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./node_modules
+          key: ${{ runner.os }}-tauri-${{ hashFiles('./package-lock.json') }}
+
+      - name: Cache cargo
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./src-tauri/target
+          key: ${{ runner.os }}-tauri-${{ hashFiles('./src-tauri/Cargo.lock') }}
+
       - name: Install frontend dependencies
         run: pnpm install
 
